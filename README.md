@@ -9,7 +9,7 @@ The Notebooks leverage [Cytoscape's RESTful API](http://apps.cytoscape.org/apps/
 
 ## Getting Started
 
-* []Install Cytoscape
+* [Install Cytoscape](http://cytoscape.org/)
 
 * `pip install -r requirements.txt`
 
