@@ -11,9 +11,12 @@ The Notebooks leverage [Cytoscape's RESTful API](http://apps.cytoscape.org/apps/
 
 * [Install Cytoscape](http://cytoscape.org/)
 
-* `pip install -r requirements.txt`
-
-* `jupyter notebook`
+```bash
+git clone git@github.com:bobbyno/sandbook.git
+cd sandbook
+pip install -r requirements.txt
+jupyter notebook
+```
 
 Use the [Exploratory Workflow](./exploratory_workflow.ipynb) to begin your analysis and create an initial visualization.
 
