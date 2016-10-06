@@ -9,7 +9,11 @@ The Notebooks leverage [Cytoscape's RESTful API](http://apps.cytoscape.org/apps/
 
 ## Getting Started
 
-* [Install Cytoscape](http://cytoscape.org/)
+[Install Cytoscape](http://cytoscape.org/)
+
+Start it up and close the welcome screen. You might want to check "Don't show again" in the lower left.
+
+Start Jupyter in the `sandbook` directory:
 
 ```bash
 git clone git@github.com:bobbyno/sandbook.git
@@ -22,6 +26,4 @@ Use the [Exploratory Workflow](./exploratory_workflow.ipynb) to begin your analy
 
 Use the [Iteration Workflow](./iteration_workflow.ipynb) to iterate on a visualization after the network has changed and you want to update the visualization.
 
-The project contains an example using data from [lein-topology](https://github.com/testedminds/lein-topology).
-
-Produce an edgelist of dependencies for your own analysis in the same format to use these notebooks for your own architecture analysis.
+The project contains an example using data from [lein-topology](https://github.com/testedminds/lein-topology). Produce an edgelist of dependencies for your own analysis in the same format to use these notebooks for your own architecture analysis.
