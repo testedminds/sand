@@ -1,13 +1,8 @@
 from igraph import Graph as IGraph
 
 
-def _update(s, data):
-    s.update([data['source'], data['target']])
-    return s
-
-
 def edgelist_to_nodes(edgelist):
-    return reduce(lambda acc, data: _update(acc, data), edgelist, set())
+    return reduce(lambda acc, data: acc.union([data['source'], data['target']]), edgelist, set())
 
 
 def edgelist_to_igraph(edgelist):
