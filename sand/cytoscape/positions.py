@@ -29,7 +29,7 @@ def __previous_positions(labels, positions, node_ids):
     previous_positions = []
 
     for label in labels:
-        if positions.has_key(label):
+        if label in positions:
             position = positions[label]
             previous_positions.append([node_ids[label], position[0], position[1]])
     return previous_positions
