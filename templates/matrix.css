@@ -2,7 +2,7 @@
 
 body {
   margin: 1em auto 4em auto;
-  width: 960px;
+  width: 1100px;
   position: relative;
   color: #333;
 }
@@ -67,7 +67,7 @@ h1 ~ aside {
   font-size: small;
   left: 5;
   position: absolute;
-  width: 180px;
+  width: 225px;
 }
 
 header,

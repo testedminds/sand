@@ -6,22 +6,24 @@
   </head>
   <body>
     <header>
-      <aside id="generatedDate">Generated Sun, 05 Mar 2017 17:32:06 -0000</aside>
+      <aside id="generatedDate">set by js</aside>
     </header>
-    <h1 id="title">Test Title</h1>
+    <h1 id="title">set by js</h1>
     <aside>
       <p>Order:
         <select id="order">
-          <option value="group">by Group</option>
-          <option value="outdegree">by Outgoing Impact</option>
-          <option value="indegree">by Incoming Dependency</option>
+          <option value="outdegree">by Outdegree (row, desc top to bottom)</option>
+          <option value="indegree">by Indegree (column, desc left to right)</option>
+          <option value="group">by Group / Module</option>
           <option value="name">by Name</option>
         </select>
       </p>
-      <p>This matrix diagram visualizes impact and dependency.
-        Each colored cell represents an impact. Darker cells indicate a larger number of interactions.
-        Color depicts group membership.</p>
-      <p>Use the drop-down menu to reorder the matrix and explore the data.</p>
+      <p id="description">
+        Each row shows a function's dependencies.
+        Each column shows callers impacted by the function.
+        This follows the IR/FAD DSM convention.
+        Color depicts group membership. Darker cells indicate a larger number of interactions.
+      </p>
     </aside>
     <div id="matrix"></div>
     <footer>

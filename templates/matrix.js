@@ -40,7 +40,7 @@ function setSortOrder(svg, nodes, width) {
   var orders = precomputeOrders(nodes);
 
   // The default sort order.
-  sortOrder.domain(orders.group);
+  sortOrder.domain(orders.outdegree);
 
   d3.select("#order").on("change", function() {
     sortOrder.domain(orders[this.value]);
