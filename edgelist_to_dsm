@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import sys
+from sand.io import csv_to_dicts
+from sand.graph import edgelist_to_igraph
+from sand.matrix import matrix
+from sand.groups import labels_to_groups
+
+
+if len(sys.argv) < 3:
+    print("Usage: {} <path to edge data> <title> <scale> <output directory>".format(sys.argv[0]))
+    sys.exit(1)
+
+filename = sys.argv[1]
+title = sys.argv[2]
+scale = int(sys.argv[3])
+output_dir = sys.argv[4]
+
+edgelist = csv_to_dicts(filename, header=['source', 'target', 'weight'])
+g = edgelist_to_igraph(edgelist)
+
+g.vs['group'] = labels_to_groups(g.vs['label'])
+
+output_dir = matrix(g, title, output_dir, scale)[0]
+print(output_dir)
