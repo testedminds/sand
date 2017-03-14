@@ -49,7 +49,6 @@ def _to_json(g, title, scale, date):
 
 
 def write_site(g, title, output_root_dir, scale=400):
-    # site_name = str(uuid.uuid4())
     site_name = "{}_{}".format(io.legalize(title), t.seconds_since_epoch())
     output_dir = "{}/{}".format(output_root_dir, site_name)
     os.mkdir(output_dir)
@@ -58,8 +57,10 @@ def write_site(g, title, output_root_dir, scale=400):
     json_output_path = '{}/{}'.format(output_dir, 'network.json')
     io.write_file(json_output_path, network)
 
+    vendor_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
     for file in ('index.html', 'matrix.js', 'matrix.css', 'd3.v3.min.js'):
-        shutil.copy2("templates/{}".format(file), "{}/{}".format(output_dir, file))
+        shutil.copy2(os.path.join(vendor_path, "../templates/{}".format(file)), "{}/{}".format(output_dir, file))
 
     return output_dir
 
