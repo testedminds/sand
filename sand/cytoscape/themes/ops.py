@@ -1,5 +1,5 @@
-import sand.cytoscape.themes.colors as c
-import sand.cytoscape.themes.label_positions as p
+from . import colors as c
+from . import label_positions as p
 
 
 settings = {
