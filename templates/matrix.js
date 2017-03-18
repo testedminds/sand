@@ -2,6 +2,7 @@ function matrix(json_file) {
   d3.json(json_file, function(network) {
     d3.select("#title").text(network.title);
     d3.select("#generatedDate").text("Generated " + network.date);
+    d3.select("#description").text(network.description);
 
     var scale = network.scale;
     var svg = createSvg(scale, scale);

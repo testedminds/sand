@@ -37,23 +37,24 @@ def _edges_to_json(g):
 #              {"source":2,"target":1,"weight":1},
 #              {"source":0,"target":2,"weight":3}]
 # }
-def _to_json(g, title, scale, date):
+def _to_json(g, title, description, scale, date):
     nodes = _nodes_to_json(g)
     edges = _edges_to_json(g)
     data = {'nodes': nodes,
             'edges': edges,
             'title': title,
+            'description': description,
             'scale': scale,
             'date': date}
     return json.dumps(data)
 
 
-def write_site(g, title, output_root_dir, scale=400):
+def write_site(g, title, description, output_root_dir, scale=400):
     site_name = "{}_{}".format(io.legalize(title), t.seconds_since_epoch())
     output_dir = "{}/{}".format(output_root_dir, site_name)
     os.mkdir(output_dir)
 
-    network = _to_json(g, title, scale, t.now())
+    network = _to_json(g, title, description, scale, t.now())
     json_output_path = '{}/{}'.format(output_dir, 'network.json')
     io.write_file(json_output_path, network)
 
@@ -65,8 +66,8 @@ def write_site(g, title, output_root_dir, scale=400):
     return output_dir
 
 
-def matrix(g, title, output_root_dir='figure', scale=400):
-    site_dir = write_site(g, title, output_root_dir, scale)
+def matrix(g, title, description, output_root_dir='figure', scale=400):
+    site_dir = write_site(g, title, description, output_root_dir, scale)
     html_output_path = "{}/{}".format(site_dir, 'index.html')
     return (site_dir, html_output_path)
 
