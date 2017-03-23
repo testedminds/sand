@@ -5,7 +5,7 @@ dsm-example:
 	./edgelist_to_dsm \
 		./data/lein-topology-57af741.csv \
 		"lein-topology 57af741" \
-		"Each row shows a function's dependencies. Each column shows callers impacted by the function. Color depicts group membership. Darker cells indicate a larger number of interactions. Foo!" \
+		"Each row shows a function's dependencies. Each column shows callers impacted by the function. Color depicts group membership. Darker cells indicate a larger number of interactions." \
 		800 \
 		"`pwd`/figure" > /tmp/$@
 
