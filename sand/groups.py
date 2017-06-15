@@ -6,11 +6,11 @@ def namespaces(labels):
     return list(map(lambda label: label.split('/')[0], labels))
 
 
-def namespaces_to_ids(namespaces):
-    ns_set = set(namespaces)
-    ns_lookup = {ns: id for ns, id in zip(ns_set, range(len(ns_set)))}
-    return list(map(lambda ns: ns_lookup[ns], namespaces))
-
-
 def labels_to_groups(labels):
-    return namespaces_to_ids(namespaces(labels))
+    label_set = set(labels)
+    lookup = {l: id for l, id in zip(label_set, range(len(label_set)))}
+    return list(map(lambda l: lookup[l], labels))
+
+
+def fqn_to_groups(labels):
+    return labels_to_groups(namespaces(labels))
