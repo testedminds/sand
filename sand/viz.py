@@ -4,6 +4,47 @@ from bokeh.plotting import figure
 from bokeh.models import HoverTool, ColumnDataSource
 
 
+# pass an igraph instance to this function, then render based on the igraph attr
+# igraph to dict: vertices, edges,
+# specify an element to sort by, since we can do
+# sorted(reviews.vs, key=lambda x: x['name'])
+
+def matrix(data, title, size, palette):
+    weights = _weights(data['nodes'], data['links'])
+    source = _column_data_source(data['nodes'], weights, palette)
+    return _add_hover(_plot(data['nodes'], source, title, size))
+
+
+def _weights(v, e):
+    N = len(v)
+    weights = np.zeros((N, N))
+    for link in e:
+        weights[link['source'], link['target']] = link['value']
+        weights[link['target'], link['source']] = link['value']
+    return weights
+
+
+def _column_data_source(nodes, weights, palette):
+    data = dict(
+        xname=[],
+        yname=[],
+        colors=[],
+        alphas=[],
+        count=weights.flatten())
+
+    for i, node1 in enumerate(nodes):
+        for j, node2 in enumerate(nodes):
+            data['xname'].append(node1['name'])
+            data['yname'].append(node2['name'])
+
+            data['alphas'].append(min(weights[i, j] / 4.0, 0.9) + 0.1)
+
+            group_color = 'lightgrey' if (node1['group'] != node2['group']) else palette[node1['group']]
+            data['colors'].append(group_color)
+
+    return ColumnDataSource(data)
+
+
 def _plot(nodes, source, title, size):
     names = [node['name'] for node in sorted(nodes, key=lambda x: x['group'])]
 
@@ -37,47 +78,9 @@ def _plot(nodes, source, title, size):
     return p
 
 
-def _weights(v, e):
-    N = len(v)
-    weights = np.zeros((N, N))
-    for link in e:
-        weights[link['source'], link['target']] = link['value']
-        weights[link['target'], link['source']] = link['value']
-    return weights
-
-
-def _column_data_source(nodes, weights):
-    colormap = ["#444444", "#a6cee3", "#1f78b4", "#b2df8a", "#33a02c", "#fb9a99",
-                "#e31a1c", "#fdbf6f", "#ff7f00", "#cab2d6", "#6a3d9a"]
-    data = dict(
-        xname=[],
-        yname=[],
-        colors=[],
-        alphas=[],
-        count=weights.flatten())
-
-    for i, node1 in enumerate(nodes):
-        for j, node2 in enumerate(nodes):
-            data['xname'].append(node1['name'])
-            data['yname'].append(node2['name'])
-
-            data['alphas'].append(min(weights[i, j] / 4.0, 0.9) + 0.1)
-
-            c = 'lightgrey' if (node1['group'] != node2['group']) else colormap[node1['group']]
-            data['colors'].append(c)
-
-    return ColumnDataSource(data)
-
-
 def _add_hover(p):
     p.select_one(HoverTool).tooltips = [
         ('names', '@yname, @xname'),
         ('count', '@count'),
     ]
     return p
-
-
-def matrix(data, title, size):
-    weights = _weights(data['nodes'], data['links'])
-    source = _column_data_source(data['nodes'], weights)
-    return _add_hover(_plot(data['nodes'], source, title, size))
