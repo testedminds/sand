@@ -1,80 +1,87 @@
-from . import io as io
-from . import time as t
-from IPython.display import IFrame, display, HTML
-import json
-import os
-import shutil
+import numpy as np
+
+from bokeh.plotting import figure
+from bokeh.models import HoverTool, ColumnDataSource
+
+from . import graph as g
 
 
-def _node_to_json(v):
-    node = {'id': v.index}
-    node.update(v.attributes())
-    return node
+def matrix(graph, sort_by, title, size, palette):
+    vertices = g.vertices_to_dicts(graph)
+    edges = g.edges_to_dicts(graph)
+    weights = _weights(vertices, edges, graph.is_directed())
+    sorted_labels = [v['label'] for v in sorted(vertices, key=lambda x: x[sort_by])]
+    source = _column_data_source(vertices, weights, palette)
+    p = _plot(vertices, sorted_labels, source, title, size)
+    return _add_hover(p)
 
 
-def _nodes_to_json(g):
-    return list(map(lambda v: _node_to_json(v), g.vs))
+def _weights(v, edges, directed):
+    N = len(v)
+    weights = np.zeros((N, N))
+
+    for e in edges:
+        weights[e['target'], e['source']] = e['weight']
+        if not directed:
+            weights[e['source'], e['target']] = e['weight']
+    return weights
 
 
-def _edge_to_json(e):
-    edge = {'source': e.source, 'target': e.target}
-    edge.update(e.attributes())
-    return edge
+def _column_data_source(nodes, weights, palette):
+    data = dict(
+        xname=[],
+        yname=[],
+        colors=[],
+        alphas=[],
+        count=weights.flatten())
+
+    for i, node1 in enumerate(nodes):
+        for j, node2 in enumerate(nodes):
+            data['xname'].append(node1['label'])
+            data['yname'].append(node2['label'])
+
+            data['alphas'].append(min(weights[i, j] / 4.0, 0.9) + 0.1)
+
+            group_color = 'lightgrey' if (node1['group'] != node2['group']) else palette[node1['group']]
+            data['colors'].append(group_color)
+
+    return ColumnDataSource(data)
 
 
-def _edges_to_json(g):
-    return list(map(lambda e: _edge_to_json(e), g.es))
+def _plot(vertices, sorted_labels, source, title, size):
+    p = figure(title=title,
+               x_axis_location="above",
+               tools="hover,save",
+               x_range=list(reversed(sorted_labels)),
+               y_range=sorted_labels)
+
+    p.plot_width = size
+    p.plot_height = size
+    p.grid.grid_line_color = None
+    p.axis.axis_line_color = None
+    p.axis.major_tick_line_color = None
+    p.axis.major_label_text_font_size = "5pt"
+    p.axis.major_label_standoff = 0
+    p.xaxis.major_label_orientation = np.pi / 3
+
+    # http://bokeh.pydata.org/en/latest/docs/reference/plotting.html#bokeh.plotting.figure.Figure.rect
+    p.rect('xname',
+           'yname',
+           0.9,
+           0.9,
+           source=source,
+           color='colors',
+           alpha='alphas',
+           line_color=None,
+           hover_line_color='black',
+           hover_color='colors')
+
+    return p
 
 
-# Given an IGraph, produce json in the format matrix.js expects:
-# {
-#    "nodes":[
-#              {"label":"node1","group":1},
-#              {"label":"node2","group":2},
-#              {"label":"node3","group":2},
-#              {"label":"node4","group":3}],
-#    "edges":[
-#              {"source":2,"target":1,"weight":1},
-#              {"source":0,"target":2,"weight":3}]
-# }
-def _to_json(g, title, description, scale, date):
-    nodes = _nodes_to_json(g)
-    edges = _edges_to_json(g)
-    data = {'nodes': nodes,
-            'edges': edges,
-            'title': title,
-            'description': description,
-            'scale': scale,
-            'date': date}
-    return json.dumps(data)
-
-
-def write_site(g, title, description, output_root_dir, scale=400):
-    site_name = "{}_{}".format(io.legalize(title), t.seconds_since_epoch())
-    output_dir = "{}/{}".format(output_root_dir, site_name)
-    os.mkdir(output_dir)
-
-    network = _to_json(g, title, description, scale, t.now())
-    json_output_path = '{}/{}'.format(output_dir, 'network.json')
-    io.write_file(json_output_path, network)
-
-    vendor_path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-
-    for file in ('index.html', 'matrix.js', 'matrix.css', 'd3.v3.min.js'):
-        shutil.copy2(os.path.join(vendor_path, "../templates/{}".format(file)), "{}/{}".format(output_dir, file))
-
-    return output_dir
-
-
-def matrix(g, title, description, output_root_dir='figure', scale=400):
-    site_dir = write_site(g, title, description, output_root_dir, scale)
-    html_output_path = "{}/{}".format(site_dir, 'index.html')
-    return (site_dir, html_output_path)
-
-
-def matrix_frame(html_output_path, scale=400):
-    return IFrame(html_output_path, width="100%", height=scale)
-
-
-def show(link):
-    display(HTML("<a href='" + link + "' target='_blank'>Open in new window</a>"))
+def _add_hover(p):
+    p.select_one(HoverTool).tooltips = [
+        ('names', '@yname, @xname'),
+        ('count', '@count'),
+    ]
+    return p

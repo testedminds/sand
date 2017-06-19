@@ -2,6 +2,26 @@ from . import groups as groups
 from igraph import Graph as IGraph
 
 
+def _vertex_to_dict(v):
+    node = {'id': v.index}
+    node.update(v.attributes())
+    return node
+
+
+def vertices_to_dicts(g):
+    return list(map(lambda v: _vertex_to_dict(v), g.vs))
+
+
+def _edge_to_dict(e):
+    edge = {'source': e.source, 'target': e.target}
+    edge.update(e.attributes())
+    return edge
+
+
+def edges_to_dicts(g):
+    return list(map(lambda e: _edge_to_dict(e), g.es))
+
+
 def _dicts_to_columns(dicts):
     """
     Given a List of Dictionaries with uniform keys, returns a single Dictionary
@@ -23,7 +43,7 @@ def _dicts_to_columns(dicts):
     return result
 
 
-def from_vertices_and_edges(vertices, edges, vertex_name_key='name', vertex_id_key='id', edge_foreign_keys=('source', 'target')):
+def from_vertices_and_edges(vertices, edges, vertex_name_key='name', vertex_id_key='id', edge_foreign_keys=('source', 'target'), directed=True):
     """
     This representation assumes that vertices and edges are encoded in
     two lists, each list containing a Python dict for each vertex and
@@ -53,23 +73,25 @@ def from_vertices_and_edges(vertices, edges, vertex_name_key='name', vertex_id_k
                          edge_data[edge_foreign_keys[0]],
                          edge_data[edge_foreign_keys[1]]))
 
-    g = IGraph(n=n, edges=edge_list, directed=True, vertex_attrs=vertex_data, edge_attrs=edge_data)
+    g = IGraph(n=n, edges=edge_list, directed=directed, vertex_attrs=vertex_data, edge_attrs=edge_data)
     g.vs['name'] = g.vs[vertex_name_key]
     g.vs['indegree'] = g.degree(mode="in")
     g.vs['outdegree'] = g.degree(mode="out")
     g.vs['label'] = g.vs[vertex_name_key]
-    g.vs['group'] = groups.labels_to_groups(g.vs['label'])
+    if 'group' not in g.vs.attributes():
+        g.vs['group'] = groups.labels_to_groups(g.vs['label'])
     return g
 
 
-def from_edges(edges, source_key='source', target_key='target', weight_key='weight'):
+def from_edges(edges, source_key='source', target_key='target', weight_key='weight', directed=True):
     """
     Given a List of Dictionaries with source, target, and weight attributes, return a weighted, directed graph.
     """
     raw = list(map(lambda x: [x[source_key], x[target_key], int(x[weight_key])], edges))
-    g = IGraph.TupleList(raw, weights=True, directed=True)
+    g = IGraph.TupleList(raw, weights=True, directed=directed)
     g.vs['indegree'] = g.degree(mode="in")
     g.vs['outdegree'] = g.degree(mode="out")
     g.vs['label'] = g.vs['name']
-    g.vs['group'] = groups.labels_to_groups(g.vs['label'])
+    if 'group' not in g.vs.attributes():
+        g.vs['group'] = groups.labels_to_groups(g.vs['label'])
     return g
