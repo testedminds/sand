@@ -33,10 +33,7 @@ jupyter notebook
 
 ## Getting Started
 
-Use the [Iteration Workflow](./iteration_workflow.ipynb) to build a visualization that can be easily updated as new vertices and edges are added over time.
-
-The project contains an example using data from [lein-topology](https://github.com/testedminds/lein-topology).
-Produce dependency data in the same format to use these notebooks for your own analysis.
+[Table of Contents](./Table%20of%20Contents.ipynb)
 
 
 ## Learn More
