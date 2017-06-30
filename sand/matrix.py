@@ -10,9 +10,9 @@ def matrix(graph, sort_by, title, size, palette):
     vertices = g.vertices_to_dicts(graph)
     edges = g.edges_to_dicts(graph)
     weights = _weights(vertices, edges, graph.is_directed())
-    sorted_labels = [v['label'] for v in sorted(vertices, key=lambda x: x[sort_by])]
+    sorted_labels = [v['label'] for v in sorted(vertices, key=lambda x: x.get(sort_by, 'group'))]
     source = _column_data_source(vertices, weights, palette)
-    p = _plot(vertices, sorted_labels, source, title, size)
+    p = _plot(vertices, sorted_labels, sort_by, source, title, size)
     return _add_hover(p)
 
 
@@ -40,27 +40,33 @@ def _column_data_source(nodes, weights, palette):
             data['xname'].append(node1['label'])
             data['yname'].append(node2['label'])
 
-            data['alphas'].append(min(weights[i, j] / 4.0, 0.9) + 0.1)
+            if (node1['group'] == node2['group']) and (weights[i, j] > 0):
+                group_color = palette[node1['group']]
+                alpha = 0.9
+            else:
+                group_color = 'lightgrey'
+                alpha = max(weights[i, j], 0.2) - 0.1
 
-            group_color = 'lightgrey' if (node1['group'] != node2['group']) else palette[node1['group']]
+            data['alphas'].append(alpha)
             data['colors'].append(group_color)
 
     return ColumnDataSource(data)
 
 
-def _plot(vertices, sorted_labels, source, title, size):
+def _plot(vertices, sorted_labels, sort_by, source, title, size):
     p = figure(title=title,
                x_axis_location="above",
                tools="hover,save",
                x_range=list(reversed(sorted_labels)),
-               y_range=sorted_labels)
+               y_range=sorted_labels,
+               name=sort_by)
 
     p.plot_width = size
     p.plot_height = size
     p.grid.grid_line_color = None
     p.axis.axis_line_color = None
     p.axis.major_tick_line_color = None
-    p.axis.major_label_text_font_size = "5pt"
+    p.axis.major_label_text_font_size = "6pt"
     p.axis.major_label_standoff = 0
     p.xaxis.major_label_orientation = np.pi / 3
 
