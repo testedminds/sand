@@ -1,0 +1,10 @@
+=============================================================================
+==  NOTICE file for use with the Apache License, Version 2.0.              ==
+==                                                                         ==
+=============================================================================
+
+sand
+
+This product includes software developed by:
+
+Bobby Norton (bobby@testedminds.com)

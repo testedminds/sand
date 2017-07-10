@@ -1,24 +1,22 @@
-## sandbook
-### Notebooks for System Architecture as Network Data
+## SAND
+### Python code and notebooks to model System Architecture as a Network of Dependencies
 
-This work uses Jupyter Notebooks to explore applications of representing system architecture as a network of engineered
+SAND uses Python and Jupyter Notebooks to explore applications of representing system architecture as a network of engineered
 artifacts and their interactions. For a software library, the artifacts are functions and the interactions are function
 calls. For RESTful microservices, an artifact is a service and the interactions are API calls.
 
-Since A calls or sends a message to B, A has a dependency on B. Anthropomorphizing helps build some intuition for this:
-A knows about B and sent a message for some reason, whereas B might not know anything about A. Transitively, the
-designer of A needs to understand the work of the designer of B, but the designer of B need not understand A assuming
-the interface for B already exists.
+Imagine we have two microservices, A and B.
 
-The transpose of this relation is that B impacts or influences A: Non backwards-compatible changes in the interface of B
-will break A. Changes in the semantics of B will change the behavior of A unless the relationship is redundant.
+If B calls A, then B has a dependency on A.
 
+The transpose of this relationship is that A impacts or influences B: Non backwards-compatible changes in A's interface that
+B calls can break B.
+
+A might not know anything about B.
+
+This simple model proves to be extremely powerful in describing arbitrarily complicated system architectures.
 
 ## Installing
-
-1. [Install Cytoscape](http://cytoscape.org/).
-Start Cytoscape up and close the welcome screen.
-You probably want to check "Don't show again" in the lower left.
 
 1. You'll also need a working Jupyter installation running on Python 3.
 
@@ -30,6 +28,11 @@ cd sandbook
 pip install -r requirements.txt
 jupyter notebook
 ```
+
+1. [Install Cytoscape](http://cytoscape.org/).
+Start Cytoscape up and close the welcome screen.
+You probably want to check "Don't show again" in the lower left.
+
 
 ## Getting Started
 
@@ -44,3 +47,10 @@ The Notebooks leverage [Cytoscape's RESTful API](http://apps.cytoscape.org/apps/
 
 
 [wcgdb]: https://github.com/bobbyno/windy-city-graphdb-9-22-16/blob/master/windy_city_graphdb_presentation.ipynb
+
+
+## License
+
+Copyright © Bobby Norton and [Tested Minds, LLC](http://www.testedminds.com).
+
+Released under the [Apache License, Version 2.0](./LICENSE.txt)
