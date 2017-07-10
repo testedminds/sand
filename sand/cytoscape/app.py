@@ -21,4 +21,3 @@ def hide_panels():
              {"name": "SOUTH_WEST", "state": "HIDE"}]
     response = requests.put(BASE + 'ui/panels/', data=json.dumps(state), headers=HEADERS)
     return response.status_code == requests.codes.ok
-

@@ -1,7 +1,12 @@
 SHELL = /usr/bin/env bash
 
+ci: test flake8
+
 test:
 	py.test
+
+flake8:
+	flake8 --ignore=E501 sand
 
 install-deps:
 	pip install -r requirements.txt
@@ -9,9 +14,6 @@ install-deps:
 # https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode
 install-develop:
 	pip install -e .
-
-flake8:
-	flake8 --ignore=E501 sand
 
 publish:
 	python setup.py sdist bdist_wheel
