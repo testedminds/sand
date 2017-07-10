@@ -41,7 +41,9 @@ You probably want to check "Don't show again" in the lower left.
 
 ## Getting Started
 
-[Table of Contents](./Table%20of%20Contents.ipynb)
+* [Loading Network Data](./Loading%20network%20data.ipynb)
+* [Matrix Visualization with Bokeh](./Matrix%20visualization%20with%20Bokeh.ipynb)
+* [Network Visualization with Cytoscape](./Visualization%20with%20Cytoscape.ipynb)
 
 
 ## Learn More
