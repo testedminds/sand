@@ -1,26 +1,31 @@
 ## SAND
 ### Python code and notebooks to model System Architecture as a Network of Dependencies
 
-SAND uses Python and Jupyter Notebooks to explore applications of representing system architecture as a network of engineered
-artifacts and their interactions. For a software library, the artifacts are functions and the interactions are function
-calls. For RESTful microservices, an artifact is a service and the interactions are API calls.
+SAND uses Python and Jupyter Notebooks to explore applications of representing system architecture as a directed graph,
+or network, of engineered artifacts and their relationships to one another.
+
+Engineered artifacts are vertices in the graph. For a software library, the artifacts are functions and the dependencies
+are function calls. For RESTful microservices, an artifact is a service and the dependencies are API calls.
+
+Directed edges represent the dependencies and their transpose, impact.
 
 Imagine we have two microservices, A and B.
 
-If B calls A, then B has a dependency on A.
+If B calls A, then B has a dependency on A. The creator of A might not know that B is a client, so the dependency relationship
+is directed.
 
 The transpose of this relationship is that A impacts or influences B: Non backwards-compatible changes in A's interface that
-B calls can break B.
+B calls can break B. Changes in B do not impact A, so once again, the edge is directed.
 
-A might not know anything about B.
+This simple model proves to be extremely powerful in describing arbitrarily complicated system architectures. The SAND library
+and accompanying Jupyter Notebooks provide working examples of visualization and analysis.
 
-This simple model proves to be extremely powerful in describing arbitrarily complicated system architectures.
 
 ## Installing
 
 1. You'll also need a working Jupyter installation running on Python 3.
 
-1. Start Jupyter in the `sandbook` directory:
+2. Start Jupyter in the `sandbook` directory:
 
 ```bash
 git clone git@github.com:bobbyno/sandbook.git
@@ -29,7 +34,7 @@ pip install -r requirements.txt
 jupyter notebook
 ```
 
-1. [Install Cytoscape](http://cytoscape.org/).
+3. [Install Cytoscape](http://cytoscape.org/).
 Start Cytoscape up and close the welcome screen.
 You probably want to check "Don't show again" in the lower left.
 
