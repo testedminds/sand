@@ -28,9 +28,10 @@ and accompanying Jupyter Notebooks provide working examples of visualization and
 2. Start Jupyter in the `sandbook` directory:
 
 ```bash
-git clone git@github.com:bobbyno/sandbook.git
-cd sandbook
+git clone git@github.com:testedminds/sand.git
+cd sand
 pip install -r requirements.txt
+cd docs
 jupyter notebook
 ```
 
@@ -41,9 +42,9 @@ You probably want to check "Don't show again" in the lower left.
 
 ## Getting Started
 
-* [Loading Network Data](./Loading%20network%20data.ipynb)
-* [Matrix Visualization with Bokeh](./Matrix%20visualization%20with%20Bokeh.ipynb)
-* [Network Visualization with Cytoscape](./Visualization%20with%20Cytoscape.ipynb)
+* [Loading Network Data](./docs/Loading%20network%20data.ipynb)
+* [Matrix Visualization with Bokeh](./docs/Matrix%20visualization%20with%20Bokeh.ipynb)
+* [Network Visualization with Cytoscape](./docs/Visualization%20with%20Cytoscape.ipynb)
 
 
 ## Learn More
