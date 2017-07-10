@@ -1,5 +1,10 @@
 SHELL = /usr/bin/env bash
 
+test:
+	py.test
+
+install-deps:
+	pip install -r requirements.txt
 
 # https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode
 install-develop:
