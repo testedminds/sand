@@ -1,7 +1,10 @@
 SHELL = /usr/bin/env bash
 
 version = `python -c "import sand; print(sand.__version__)"`
-name = sand-$(version)
+img-name = sand
+name = $(img-name)-$(version)
+
+include docker/makefile
 
 ci: test flake8
 
@@ -11,12 +14,10 @@ test:
 flake8:
 	flake8 --ignore=E501 sand
 
-install-deps:
-	pip install -r requirements.txt
-
 # https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode
 install-develop:
 	pip install -e .
+	pip install -r requirements.txt
 
 publish: wheel sign upload clean tag
 
