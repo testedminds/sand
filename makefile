@@ -1,5 +1,8 @@
 SHELL = /usr/bin/env bash
 
+version = `python -c "import sand; print(sand.__version__)"`
+name = sand-$(version)
+
 ci: test flake8
 
 test:
@@ -15,8 +18,22 @@ install-deps:
 install-develop:
 	pip install -e .
 
-publish:
+publish: wheel sign upload clean tag
+
+wheel:
 	python setup.py sdist bdist_wheel
-	gpg --detach-sign -a dist/*.tar.gz
-	#twine upload dist/*.tar.gz *.tar.gz.asc
-	#rm -rf build dist .egg sand.egg-info
+
+sign:
+	gpg --detach-sign -a dist/$(name).tar.gz
+	gpg --detach-sign -a dist/$(name)-py3-none-any.whl
+
+upload:
+	twine upload dist/$(name)-py3-none-any.whl dist/$(name)-py3-none-any.whl.asc
+	twine upload dist/$(name).tar.gz dist/$(name).tar.gz.asc
+
+clean:
+	rm -rf build dist .egg sand.egg-info
+
+tag:
+	git tag v$(version)
+	git push --tags
