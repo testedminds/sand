@@ -11,21 +11,30 @@ Directed edges represent the dependencies and their transpose, impact.
 
 Imagine we have two microservices, A and B.
 
-If B calls A, then B has a dependency on A. The creator of A might not know that B is a client, so the dependency relationship
-is directed.
+If B calls A, then B has a dependency on A. The creator of A might not know that B is a client, so the dependency
+relationship is directed.
 
-The transpose of this relationship is that A impacts or influences B: Non backwards-compatible changes in A's interface that
-B calls can break B. Changes in B do not impact A, so once again, the edge is directed.
+The transpose of this relationship is that A impacts or influences B: Non backwards-compatible changes in A's interface
+that B calls can break B. Changes in B do not impact A, so once again, the edge is directed.
 
-This simple model proves to be extremely powerful in describing arbitrarily complicated system architectures. The SAND library
-and accompanying Jupyter Notebooks provide working examples of visualization and analysis.
+This simple model proves to be extremely powerful in describing arbitrarily complicated system architectures. The SAND
+library and accompanying Jupyter Notebooks provide working examples of visualization and analysis.
 
 
-## Installing
+## Installation
 
-1. You'll also need a working Jupyter installation running on Python 3.
+`pip install sand`
 
-2. Start Jupyter in the `sandbook` directory:
+
+## Documentation
+
+* [Loading Network Data](./docs/Loading%20network%20data.ipynb)
+* [Matrix Visualization with Bokeh](./docs/Matrix%20visualization%20with%20Bokeh.ipynb)
+* [Network Visualization with Cytoscape](./docs/Visualization%20with%20Cytoscape.ipynb)
+
+To run the notebooks locally:
+
+* Start Jupyter in the `docs` directory:
 
 ```bash
 git clone git@github.com:testedminds/sand.git
@@ -35,16 +44,8 @@ cd docs
 jupyter notebook
 ```
 
-3. [Install Cytoscape](http://cytoscape.org/).
-Start Cytoscape up and close the welcome screen.
-You probably want to check "Don't show again" in the lower left.
-
-
-## Getting Started
-
-* [Loading Network Data](./docs/Loading%20network%20data.ipynb)
-* [Matrix Visualization with Bokeh](./docs/Matrix%20visualization%20with%20Bokeh.ipynb)
-* [Network Visualization with Cytoscape](./docs/Visualization%20with%20Cytoscape.ipynb)
+* [Install Cytoscape](http://cytoscape.org/) to run the optional Cytoscape examples. Start Cytoscape up and close the
+  welcome screen. You probably want to check "Don't show again" in the lower left.
 
 
 ## Learn More

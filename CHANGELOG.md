@@ -6,7 +6,10 @@ __This file is organized according to the conventions in [Keep a CHANGELOG](http
 
 ## Unreleased
 
+## [0.1.1] - 2017-07-10
 
-## [0.1.0] - 2017-07-07
+- Fix description on PyPI.
+
+## [0.1.0] - 2017-07-10
 
 - Initial public release.
