@@ -25,8 +25,14 @@ library and accompanying Jupyter Notebooks provide working examples of visualiza
 
 `pip install sand`
 
+You might also want to clone this git repo to follow along with the examples below:
 
-## Documentation
+```bash
+git clone git@github.com:testedminds/sand.git
+cd sand
+```
+
+## Getting Started
 
 SAND is documented with a series of Jupyter Notebooks:
 
@@ -34,13 +40,38 @@ SAND is documented with a series of Jupyter Notebooks:
 * [Matrix Visualization with Bokeh](./docs/Matrix%20visualization%20with%20Bokeh.ipynb)
 * [Network Visualization with Cytoscape](./docs/Visualization%20with%20Cytoscape.ipynb)
 
-To run the notebooks locally:
+### Running in Docker
 
-* Start Jupyter in the `docs` directory:
+You can run these notebooks via Docker to experiment. Assuming you have a `docker-machine` running and you've cloned the
+`sand` repo:
 
 ```bash
 git clone git@github.com:testedminds/sand.git
-cd sand
+docker pull testedminds/sand
+make docker-docs
+# And after the container starts...
+make docker-open
+```
+
+When the notebook opens in your browser, you will see the Notebook Dashboard, which will show a list of the notebooks
+and data in the `docs` directory.
+
+These commands translate to:
+
+```
+docker run -d -p 80:8888 -v `pwd`/docs:/opt/sand --rm --name sand testedminds/sand:latest \
+                jupyter notebook --allow-root --ip 0.0.0.0 --no-browser --NotebookApp.token=''
+
+open http://192.168.99.100
+```
+
+This is a useful technique to quickly explore network data anywhere on your local filesystem.
+
+### Running locally
+
+To run the notebooks locally without Docker:
+
+```bash
 pip install -r requirements.txt
 cd docs
 jupyter notebook
