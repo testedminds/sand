@@ -28,6 +28,8 @@ library and accompanying Jupyter Notebooks provide working examples of visualiza
 
 ## Documentation
 
+SAND is documented with a series of Jupyter Notebooks:
+
 * [Loading Network Data](./docs/Loading%20network%20data.ipynb)
 * [Matrix Visualization with Bokeh](./docs/Matrix%20visualization%20with%20Bokeh.ipynb)
 * [Network Visualization with Cytoscape](./docs/Visualization%20with%20Cytoscape.ipynb)
