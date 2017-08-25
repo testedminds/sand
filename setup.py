@@ -1,4 +1,4 @@
-import setuptools
+from setuptools import setup, find_packages
 
 try:
     import pypandoc
@@ -8,7 +8,7 @@ except ImportError:
 
 from sand import __version__
 
-setuptools.setup(
+setup(
     name='sand',
     version=__version__,
     description='SAND: System Architecture as a Network of Dependencies',
@@ -43,7 +43,7 @@ setuptools.setup(
     ],
     keywords=['Architecture', 'Network', 'Graph'],
 
-    packages=['sand'],
+    packages=find_packages(exclude=('docker', 'docs', 'tests')),
     include_package_data=True,
 
     install_requires=[
