@@ -7,9 +7,12 @@ def legalize(name):
     return name.replace(' ', '_').lower()
 
 
-def write_file(f, data):
-    with open(f, 'w') as result:
-        result.write(data)
+def dictionary_list_to_csv(data, file):
+    header = data[0].keys()
+    with open(file, 'w') as out:
+        writer = csv.DictWriter(out, header)
+        writer.writeheader()
+        writer.writerows(data)
 
 
 def csv_header(file):
