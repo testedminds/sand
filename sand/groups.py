@@ -14,3 +14,15 @@ def labels_to_groups(labels):
 
 def fqn_to_groups(labels):
     return labels_to_groups(namespaces(labels))
+
+
+def edge_betweenness(g, directed=True):
+    # Girvan-Newman edge betweenness-based community structure detection
+    # works with directed and weighted edges and will handle multiple communities.
+
+    # calculate dendrogram
+    dendogram = g.community_edge_betweenness(directed=directed)
+    # convert it into a flat clustering
+    clusters = dendogram.as_clustering()
+    # get the membership vector
+    return clusters.membership
