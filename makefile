@@ -15,9 +15,15 @@ flake8:
 	flake8 --ignore=E501 sand
 
 # https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode
-install-develop:
-	pip install -e .
+requirements:
 	pip install -r requirements.txt
+
+# Depends on virtualenvwrapper: See https://docs.python-guide.org/dev/virtualenvs/#virtualenvwrapper
+venv:
+	mkvirtualenv sand
+	workon sand
+
+create-venv: venv requirements
 
 publish: wheel sign upload clean tag
 

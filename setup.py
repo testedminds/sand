@@ -47,11 +47,10 @@ setup(
     include_package_data=True,
 
     install_requires=[
-        'bokeh==0.12.6',
-        'cairocffi==0.8.0',
-        'numpy==1.13.1',
-        'pandas==0.20.2',
-        'py2cytoscape==0.6.2',
+        'bokeh>=1.0.0,<2.0.0',
+        'pandas>=0.23.0,<1.0.0',
+        'py2cytoscape==0.7.0',
+        'cairocffi>=0.9.0,<1.0.0',
         'python-igraph==0.7.1.post6',
     ],
 
