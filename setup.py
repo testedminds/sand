@@ -53,8 +53,4 @@ setup(
         'cairocffi>=0.9.0,<1.0.0',
         'python-igraph==0.7.1.post6',
     ],
-
-    tests_require=[
-        'pytest==3.1.3',
-    ]
 )
