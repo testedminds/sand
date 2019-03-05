@@ -3,12 +3,12 @@ import numpy as np
 from bokeh.plotting import figure
 from bokeh.models import HoverTool, ColumnDataSource
 
-from . import graph as g
+from .graph import (vertices_to_dicts, edges_to_dicts)
 
 
 def matrix(graph, sort_by, title, size, palette):
-    vertices = g.vertices_to_dicts(graph)
-    edges = g.edges_to_dicts(graph)
+    vertices = vertices_to_dicts(graph)
+    edges = edges_to_dicts(graph)
     weights = _weights(vertices, edges, graph.is_directed())
     sorted_labels = [v['label'] for v in sorted(vertices, key=lambda x: x.get(sort_by, 'group'))]
     source = _column_data_source(vertices, weights, palette)

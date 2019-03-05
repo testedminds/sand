@@ -1,4 +1,4 @@
-from . import groups as groups
+from .groups import labels_to_groups
 from igraph import Graph as IGraph
 
 
@@ -79,7 +79,7 @@ def from_vertices_and_edges(vertices, edges, vertex_name_key='name', vertex_id_k
     g.vs['outdegree'] = g.degree(mode="out")
     g.vs['label'] = g.vs[vertex_name_key]
     if 'group' not in g.vs.attributes():
-        g.vs['group'] = groups.labels_to_groups(g.vs['label'])
+        g.vs['group'] = labels_to_groups(g.vs['label'])
     return g
 
 
@@ -93,5 +93,5 @@ def from_edges(edges, source_key='source', target_key='target', weight_key='weig
     g.vs['outdegree'] = g.degree(mode="out")
     g.vs['label'] = g.vs['name']
     if 'group' not in g.vs.attributes():
-        g.vs['group'] = groups.labels_to_groups(g.vs['label'])
+        g.vs['group'] = labels_to_groups(g.vs['label'])
     return g
