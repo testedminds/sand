@@ -43,7 +43,8 @@ def _dicts_to_columns(dicts):
     return result
 
 
-def from_vertices_and_edges(vertices, edges, vertex_name_key='name', vertex_id_key='id', edge_foreign_keys=('source', 'target'), directed=True):
+def from_vertices_and_edges(vertices, edges, vertex_name_key='name', vertex_id_key='id',
+                            edge_foreign_keys=('source', 'target'), directed=True):
     """
     This representation assumes that vertices and edges are encoded in
     two lists, each list containing a Python dict for each vertex and

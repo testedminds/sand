@@ -15,7 +15,7 @@ def number_of_outside_interactions(g, membership):
 
 
 def cluster_score(membership):
-    return sum([i*i for i in Counter(membership).values()])
+    return sum([i * i for i in Counter(membership).values()])
 
 
 def objective(g, membership, alpha=1, beta=10):

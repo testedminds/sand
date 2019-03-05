@@ -1,7 +1,7 @@
 import csv
 
 
-def legalize(name):
+def legal_file_name(name):
     for c in r'[]/\;,><&*:%=+@!#^()|?^':
         name = name.replace(c, ' ')
     return name.replace(' ', '_').lower()
