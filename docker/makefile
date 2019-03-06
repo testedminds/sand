@@ -26,4 +26,4 @@ docker-run:
 docker-docs: docker-stop docker-run
 
 docker-open:
-	open http://192.168.99.100
+	open http://`docker-machine ip dev`
