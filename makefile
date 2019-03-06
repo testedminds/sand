@@ -44,4 +44,4 @@ clean:
 tag:
 	git tag v$(version)
 	git push --tags
-	@echo "Now increment version in sand/__init__.py to start next release."
+	@echo "Now increment version in sand/__version__.py to start next release."
