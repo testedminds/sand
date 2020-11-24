@@ -18,12 +18,14 @@ flake8:
 requirements:
 	pip install -r requirements.txt
 
-# Depends on virtualenvwrapper: See https://docs.python-guide.org/dev/virtualenvs/#virtualenvwrapper
-venv:
-	mkvirtualenv sand
-	workon sand
+env:
+	conda create --name sand python=3.9
+	conda install --force-reinstall -y -q --name sand -c conda-forge --file requirements.txt
+	source ${CONDA_PREFIX}/bin/activate sand && \
+	python setup.py develop
 
-create-venv: venv requirements
+rm-env:
+	conda env remove --name sand
 
 publish: wheel sign upload clean tag
 
