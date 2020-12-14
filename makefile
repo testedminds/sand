@@ -27,7 +27,7 @@ env:
 rm-env:
 	conda env remove --name sand
 
-publish: wheel sign upload clean tag
+release: wheel sign upload clean tag
 
 wheel:
 	python setup.py sdist bdist_wheel
